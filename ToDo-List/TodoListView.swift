@@ -124,7 +124,7 @@ struct TodoListView: View {
                         .foregroundStyle(.white)
                         .font(.system(size: 22))
                     
-                    ScrollView {
+                    ScrollView(showsIndicators: false) {
                         VStack(spacing: 10) {
                             ForEach($taskList) { $todo in
                                 TaskView(todo: $todo)
