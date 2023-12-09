@@ -14,9 +14,8 @@ struct TaskView: View {
     var body: some View {
         HStack(spacing: 0) {
             Rectangle()
-                .foregroundColor(.clear)
+                .foregroundColor(todo.color)
                 .frame(width: 16, height: 80)
-                .background(todo.color)
             
             HStack {
                 VStack(alignment: .leading, spacing: 5) {

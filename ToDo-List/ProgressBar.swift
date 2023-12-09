@@ -15,7 +15,7 @@ struct ProgressBar: View {
         GeometryReader { geometry in
             let width = geometry.size.width
             let multiplier = width / 100
-            
+             
             ZStack(alignment: .leading) {
                 RoundedRectangle(cornerRadius: 20, style: .continuous)
                     .frame(width: width, height: 18)

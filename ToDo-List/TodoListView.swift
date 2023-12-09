@@ -26,9 +26,11 @@ struct TodoListView: View {
         ZStack {
             Color(.black)
                 .ignoresSafeArea()
+            
             VStack(alignment: .leading, spacing: 35) {
                 HStack {
-                    Text("You have \(uncompletedTaskCount) tasks to complete")
+                    // აქ ძალით გავაკეთე space, რომ "complete!" სიტყვა მეორე ხაზზე იყოს ( უფრო ლამაზია :დ
+                    Text(uncompletedTaskCount == 0 ? "All tasks are             complete!👏🏻" : "You have \(uncompletedTaskCount) tasks to complete")
                         .font(.system(size: 25, weight: .semibold))
                         .foregroundStyle(.white)
                     
@@ -44,7 +46,7 @@ struct TodoListView: View {
                                     .fill(Color.red)
                                     .frame(width: 20)
                                     .offset(y: 8)
-                                Text("\(taskList.count - uncompletedTaskCount)")
+                                Text("\(uncompletedTaskCount)")
                                     .foregroundColor(.white)
                                     .font(.system(size: 10))
                                     .offset(y:8)
@@ -61,11 +63,21 @@ struct TodoListView: View {
                         Text("Complete All")
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 15)
-                            .background(LinearGradient(gradient: Gradient(colors: [Color(red: 186/255, green: 131/255, blue: 222/255), Color(red: 222/255, green: 131/255, blue: 176/255)]), startPoint: .leading, endPoint: .trailing))
+                            .background(
+                                Group {
+                                    if uncompletedTaskCount == 0 {
+                                        Color.gray
+                                    } else {
+                                        LinearGradient(gradient: Gradient(colors: [Color(red: 186/255, green: 131/255, blue: 222/255), Color(red: 222/255, green: 131/255, blue: 176/255)]), startPoint: .leading, endPoint: .trailing)
+                                    }
+                                }
+                            )
                             .foregroundColor(.white)
                             .font(.system(size: 16, weight: .semibold))
                             .cornerRadius(10)
                     })
+                    .disabled(uncompletedTaskCount == 0)
+                    
                     
                     Text("Progress")
                         .foregroundStyle(.white)
@@ -84,14 +96,14 @@ struct TodoListView: View {
                         VStack(spacing: 5) {
                             
                             HStack {
-                                Text("Keep working")
+                                Text(uncompletedTaskCount > 0 ? "Keep working" : "Done!👏🏻")
                                     .foregroundStyle(.white)
                                     .font(.system(size: 14))
                                     .opacity(0.8)
                                 
                                 Spacer()
                                 
-                                Text("\(Int((Double(taskList.count - uncompletedTaskCount) / Double(taskList.count)) * 100))")
+                                Text("\(Int((Double(taskList.count - uncompletedTaskCount) / Double(taskList.count)) * 100))%")
                                     .foregroundStyle(.white)
                                     .font(.system(size: 18))
                                 
